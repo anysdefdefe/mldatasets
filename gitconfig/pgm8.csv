@@ -1,8 +1,7 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
@@ -15,19 +14,14 @@ le = LabelEncoder()
 
 data['diagnosis'] = le.fit_transform(data['diagnosis'])
 
-data = data.dropna()
-
-X = data.drop(columns=['diagnosis'])
+X = data.drop('diagnosis', axis=1)
 y = data['diagnosis']
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-model = DecisionTreeClassifier(
-    criterion='entropy',
-    max_depth=4
-)
+model = DecisionTreeClassifier()
 
 model.fit(X_train, y_train)
 
@@ -37,19 +31,9 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 
 sample = X.iloc[[0]]
 
-pred = model.predict(sample)
+prediction = model.predict(sample)
 
-if pred[0] == 1:
+if prediction[0] == 1:
     print("Malignant")
 else:
     print("Benign")
-
-plt.figure(figsize=(12,8))
-
-plot_tree(
-    model,
-    filled=True,
-    feature_names=X.columns
-)
-
-plt.show()
