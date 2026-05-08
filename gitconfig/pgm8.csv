@@ -29,6 +29,15 @@ y_pred = model.predict(X_test)
 
 print("Accuracy:", accuracy_score(y_test, y_pred))
 
+
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+plt.figure(figsize=(12, 8)) # Set figure size
+# Plot tree structure
+plot_tree(model, filled=True, feature_names=X.columns, class_names=[&#39;Benign&#39;, &#39;Malignant&#39;])
+plt.title(&quot;Decision Tree Visualization&quot;)
+plt.show()
+
 sample = X.iloc[[0]]
 
 prediction = model.predict(sample)
